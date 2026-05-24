@@ -16,6 +16,24 @@ async def get_user(user_id: str) -> User:
 - Use `ruff` for linting and formatting
 - Use `mypy` for static type checking
 - All code must pass `pre-commit` hooks before committing
+- Ruff configuration is defined in `pyproject.toml` — do not override it inline
+
+Key ruff settings in effect:
+
+| Setting | Value |
+|---|---|
+| `line-length` | 120 |
+| `target-version` | py310 |
+| `quote-style` | double |
+| `pydocstyle.convention` | google |
+| `lint.per-file-ignores` | ANN rules ignored in `tests/**` |
+
+Run linting and formatting:
+
+```bash
+ruff check .
+ruff format .
+```
 
 ## Naming Convention
 
