@@ -36,3 +36,37 @@ format.line-ending = "auto"
 format.docstring-code-format = false
 # Use dynamic line length for docstring code blocks
 format.docstring-code-line-length = "dynamic"
+
+[tool.coverage.run]
+# Measure branch coverage in addition to line coverage
+branch = true
+# Source directories to measure
+source = ["src"]
+# Paths to exclude from measurement
+omit = [
+    "tests/*",
+    "*/__init__.py",
+]
+
+[tool.coverage.report]
+# Show line numbers of statements not covered
+show_missing = true
+# Minimum coverage percentage required to pass
+fail_under = 80
+# Patterns to exclude from coverage reporting
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.coverage.html]
+# Output directory for HTML coverage report
+directory = "htmlcov"
+
+[tool.coverage.xml]
+# Output file for XML coverage report (used by CI)
+output = "coverage.xml"
