@@ -37,23 +37,19 @@ format.docstring-code-format = false
 # Use dynamic line length for docstring code blocks
 format.docstring-code-line-length = "dynamic"
 
-[tool.coverage.run]
+[tool.coverage]
 # Measure branch coverage in addition to line coverage
-branch = true
+run.branch = true
 # Source directories to measure
-source = ["src"]
+run.source = ["src"]
 # Paths to exclude from measurement
-omit = [
-    "tests/*",
-]
-
-[tool.coverage.report]
+run.omit = ["tests/*"]
 # Show line numbers of statements not covered
-show_missing = true
+report.show_missing = true
 # Minimum coverage percentage required to pass
-fail_under = 60
+report.fail_under = 60
 # Patterns to exclude from coverage reporting
-exclude_lines = [
+report.exclude_lines = [
     "pragma: no cover",
     "def __repr__",
     "raise NotImplementedError",
@@ -61,11 +57,7 @@ exclude_lines = [
     "if __name__ == .__main__.:",
     "@(abc\\.)?abstractmethod",
 ]
-
-[tool.coverage.html]
 # Output directory for HTML coverage report
-directory = "htmlcov"
-
-[tool.coverage.xml]
+html.directory = "htmlcov"
 # Output file for XML coverage report (used by CI)
-output = "coverage.xml"
+xml.output = "coverage.xml"
