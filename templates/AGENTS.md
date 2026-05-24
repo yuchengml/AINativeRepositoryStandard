@@ -15,7 +15,7 @@
 ## 2. Coding Rules
 
 - All functions must have type hints (`mypy` compliant).
-- Code format must follow the project's `ruff` configuration.
+- Code format must follow the project's `ruff` configuration defined in `pyproject.toml` — do not override inline.
 - Docstrings must follow Google style.
 - The comments in the code must be in English.
 - No business logic inside API routers/controllers.
