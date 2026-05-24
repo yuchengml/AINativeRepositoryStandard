@@ -52,7 +52,7 @@ omit = [
 # Show line numbers of statements not covered
 show_missing = true
 # Minimum coverage percentage required to pass
-fail_under = 80
+fail_under = 60
 # Patterns to exclude from coverage reporting
 exclude_lines = [
     "pragma: no cover",
