@@ -113,6 +113,7 @@ repo/
 ├── Makefile
 ├── README.md
 ├── AGENTS.md
+├── CLAUDE.md
 ├── ARCHITECTURE.md
 ├── CONTRIBUTING.md
 ├── DECISIONS.md
@@ -143,18 +144,32 @@ README 是 AI 與人類理解專案的第一入口。
 
 ## 4.2 AGENTS.md
 
-定義 AI Agent 開發規範。
+**AI Agent 的主入口文件。**
+
+AI Agent 進入 Repository 後必須先閱讀 `AGENTS.md`，再開始執行任何任務。
 
 應包含：
 
-* Repository Overview
+* Repository Knowledge Map（指引 Agent 依序閱讀所有相關文件）
 * Coding Standards
 * Testing Rules
 * Architecture Constraints
 * Forbidden Changes
 * Dependency Rules
-* Development Workflow
+* Development Workflow（指向 `.ai/workflows/`）
 * Common Commands
+
+建議的閱讀順序應明確定義於 `AGENTS.md` 中：
+
+```text
+AGENTS.md
+    ↓
+ARCHITECTURE.md + DECISIONS.md   ← 理解系統架構
+    ↓
+.ai/rules/*                      ← 學習詳細規則
+    ↓
+.ai/workflows/<task-type>        ← 依任務類型選擇對應 workflow
+```
 
 範例：
 
@@ -174,6 +189,34 @@ README 是 AI 與人類理解專案的第一入口。
 - Never modify production deployment
 - Never commit secrets
 ```
+
+---
+
+## 4.6 CLAUDE.md
+
+專為 Claude Code 設計的入口文件。
+
+Claude Code 會在每個 session 開始時自動讀取 `CLAUDE.md`。
+
+設計原則：
+
+* 內容應極簡，只需引導 Claude Code 閱讀 `AGENTS.md`
+* 不重複 `AGENTS.md` 的內容
+* 確保 Claude Code 與其他 AI Agent 遵循相同的規範
+
+範例：
+
+```md
+# CLAUDE.md
+
+This file is read automatically by Claude Code at the start of every session.
+
+## Start Here
+
+Read `AGENTS.md` before taking any action in this repository.
+```
+
+其他 AI 工具（Cursor、Copilot 等）若有類似的自動讀取機制，可依相同模式建立對應的入口文件，並同樣指向 `AGENTS.md`。
 
 ---
 
@@ -475,7 +518,27 @@ Pull Request 必須：
 
 # 10. AI-Specific Standards
 
-## 10.1 .ai Directory
+## 10.1 Agent Entry Point Design
+
+AI Agent 進入 Repository 的閱讀路徑應明確定義：
+
+```text
+CLAUDE.md (Claude Code)
+    ↓
+AGENTS.md                        ← 所有 AI Agent 的主入口
+    ↓
+ARCHITECTURE.md + DECISIONS.md   ← 系統架構與決策背景
+    ↓
+.ai/rules/*                      ← 詳細的 coding / testing / security 規則
+    ↓
+.ai/workflows/<task-type>        ← 依任務類型執行對應 workflow
+```
+
+`AGENTS.md` 必須包含此閱讀路徑的說明，讓 Agent 知道每個文件的用途與閱讀時機。
+
+---
+
+## 10.2 .ai Directory
 
 ```text
 .ai/
@@ -487,26 +550,28 @@ Pull Request 必須：
 
 ---
 
-## 10.2 AI Rules
+## 10.3 AI Rules
 
-範例：
+`.ai/rules/` 存放語言與領域的詳細規範，供 Agent 在實作前閱讀：
 
 ```text
-.ai/rules/python.md
-.ai/rules/testing.md
-.ai/rules/security.md
+.ai/rules/python.md      ← type hints、async 規則、命名慣例、layer 限制
+.ai/rules/testing.md     ← 測試結構、覆蓋率要求、命名規範
+.ai/rules/security.md    ← 禁止行為、secret 管理、input validation
 ```
 
 ---
 
-## 10.3 Workflow Templates
+## 10.4 Workflow Templates
+
+`.ai/workflows/` 存放各任務類型的逐步流程，Agent 應依任務類型選擇對應文件：
 
 ```text
 .ai/workflows/
-├── feature-development.md
-├── bug-fix.md
-├── release-process.md
-└── refactoring.md
+├── feature-development.md   ← 新功能開發
+├── bug-fix.md               ← 先寫 regression test 再修 bug
+├── release-process.md       ← semantic versioning、changelog、發布
+└── refactoring.md           ← 行為不變的重構，測試先行
 ```
 
 ---
@@ -718,7 +783,7 @@ engineering-standards/
 ## Required
 
 * Clear repository structure
-* AGENTS.md
+* AGENTS.md（含 Repository Knowledge Map）
 * ARCHITECTURE.md
 * CI/CD pipeline
 * Type hints
@@ -730,8 +795,9 @@ engineering-standards/
 
 ## Recommended
 
+* CLAUDE.md（Claude Code 使用者）
 * repo-meta/
-* .ai/
+* .ai/（含 rules/ 與 workflows/）
 * Structured domain docs
 * Architecture decision records
 * OpenAPI schema
@@ -747,8 +813,11 @@ repo/
 ├── tests/
 ├── docs/
 ├── .ai/
+│   ├── rules/
+│   └── workflows/
 ├── README.md
 ├── AGENTS.md
+├── CLAUDE.md
 ├── ARCHITECTURE.md
 ├── pyproject.toml
 └── .github/workflows/
