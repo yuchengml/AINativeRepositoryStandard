@@ -23,8 +23,6 @@ lint.ignore = ["D100", "D107", "D203", "D205", "D212"]
 lint.per-file-ignores = {"tests/**" = ["ANN"]}
 # Use Google-style docstring convention
 lint.pydocstyle.convention = "google"
-# Regex pattern for valid variable names
-lint.pep8-naming.variable-rgx = "[a-zA-Z0-9_]+"
 
 # Use double quotes for strings
 format.quote-style = "double"
