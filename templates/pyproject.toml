@@ -45,7 +45,6 @@ source = ["src"]
 # Paths to exclude from measurement
 omit = [
     "tests/*",
-    "*/__init__.py",
 ]
 
 [tool.coverage.report]
