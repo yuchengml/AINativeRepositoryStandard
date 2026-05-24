@@ -235,10 +235,19 @@ This repository is optimized for AI-assisted development.
 
 | File | Purpose |
 |---|---|
-| `AGENTS.md` | AI development instructions — read this first |
+| `AGENTS.md` | AI development instructions — primary entry point for all AI agents |
+| `CLAUDE.md` | Claude Code entry point — redirects to `AGENTS.md` |
 | `ARCHITECTURE.md` | System architecture and layer boundaries |
 | `DECISIONS.md` | Architecture decision records |
 | `repo-meta/` | Machine-readable metadata |
+
+## Claude Code
+
+This repository includes a `CLAUDE.md` file specifically for [Claude Code](https://claude.ai/code).
+
+Claude Code automatically reads `CLAUDE.md` at the start of every session. This file contains a single instruction: read `AGENTS.md` first. This ensures Claude Code follows the same rules and workflows as any other AI agent operating in this repository.
+
+If you use other AI coding tools, point them to `AGENTS.md` directly.
 
 ## .ai/ Directory
 
