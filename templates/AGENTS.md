@@ -72,6 +72,7 @@ Full details: `.ai/rules/testing.md`
 - Integration tests are required for API or database schema changes.
 - Tests must be deterministic (no flaky tests).
 - Every bug fix requires a regression test written before the fix.
+- Coverage configuration is defined in `pyproject.toml` — minimum threshold is 60%.
 
 ---
 

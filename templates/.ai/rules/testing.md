@@ -18,6 +18,25 @@ tests/
 | Integration Test | Required for all API changes         |
 | E2E Test         | Required for all critical user flows |
 
+Coverage configuration is defined in `pyproject.toml` — do not override it inline.
+
+Key coverage settings in effect:
+
+| Setting | Value |
+|---|---|
+| `run.branch` | `true` — branch coverage measured |
+| `run.source` | `["src"]` — application code only |
+| `report.fail_under` | `60` — minimum threshold to pass |
+| `html.directory` | `htmlcov/` |
+| `xml.output` | `coverage.xml` (consumed by CI) |
+
+Run coverage:
+
+```bash
+pytest --cov=src --cov-report=term-missing
+pytest --cov=src --cov-report=html   # generates htmlcov/
+```
+
 ## Test Rules
 
 - Every bug fix must include a regression test
