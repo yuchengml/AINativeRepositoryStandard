@@ -38,17 +38,12 @@ format.docstring-code-format = false
 format.docstring-code-line-length = "dynamic"
 
 [tool.coverage]
-# Measure branch coverage in addition to line coverage
 run.branch = true
-# Source directories to measure
 run.source = ["src"]
-# Paths to exclude from measurement
-run.omit = ["tests/*"]
-# Show line numbers of statements not covered
+run.omit = ["tests/**"]
 report.show_missing = true
-# Minimum coverage percentage required to pass
+# Raise this threshold as the project matures (target: 80%+)
 report.fail_under = 60
-# Patterns to exclude from coverage reporting
 report.exclude_lines = [
     "pragma: no cover",
     "def __repr__",
@@ -57,7 +52,5 @@ report.exclude_lines = [
     "if __name__ == .__main__.:",
     "@(abc\\.)?abstractmethod",
 ]
-# Output directory for HTML coverage report
 html.directory = "htmlcov"
-# Output file for XML coverage report (used by CI)
 xml.output = "coverage.xml"

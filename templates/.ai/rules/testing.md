@@ -26,8 +26,8 @@ Key coverage settings in effect:
 |---|---|
 | `run.branch` | `true` — branch coverage measured |
 | `run.source` | `["src"]` — application code only |
-| `report.fail_under` | `60` — minimum threshold to pass |
-| `html.directory` | `htmlcov/` |
+| `report.fail_under` | `60` — minimum threshold to pass (raise to 80%+ as project matures) |
+| `html.directory` | `htmlcov` |
 | `xml.output` | `coverage.xml` (consumed by CI) |
 
 Run coverage:
