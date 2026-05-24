@@ -231,33 +231,86 @@ Key rules:
 
 This repository is optimized for AI-assisted development.
 
-AI-related resources:
-
-```text
-.ai/
-```
-
-Important files:
+## Key Reference Documents
 
 | File | Purpose |
 |---|---|
-| AGENTS.md | AI development instructions |
-| ARCHITECTURE.md | System architecture |
-| DECISIONS.md | Architecture decisions |
-| repo-meta/ | Machine-readable metadata |
+| `AGENTS.md` | AI development instructions — primary entry point for all AI agents |
+| `CLAUDE.md` | Claude Code entry point — redirects to `AGENTS.md` |
+| `ARCHITECTURE.md` | System architecture and layer boundaries |
+| `DECISIONS.md` | Architecture decision records |
+| `repo-meta/` | Machine-readable metadata |
+
+## Claude Code
+
+This repository includes a `CLAUDE.md` file specifically for [Claude Code](https://claude.ai/code).
+
+Claude Code automatically reads `CLAUDE.md` at the start of every session. This file contains a single instruction: read `AGENTS.md` first. This ensures Claude Code follows the same rules and workflows as any other AI agent operating in this repository.
+
+If you use other AI coding tools, point them to `AGENTS.md` directly.
+
+## .ai/ Directory
+
+The `.ai/` directory contains AI-specific rules, workflows, and resources that help AI agents operate correctly within this repository.
+
+```text
+.ai/
+├── rules/        ← Coding rules for AI agents to follow
+├── workflows/    ← Step-by-step development workflows
+├── prompts/      ← Custom prompts for AI tools
+└── examples/     ← Golden path examples for AI to reference
+```
+
+### rules/
+
+Language- and domain-specific coding constraints:
+
+| File | Purpose |
+|---|---|
+| `rules/python.md` | Type hints, async rules, naming conventions, layer constraints |
+| `rules/testing.md` | Test structure, required coverage, naming, AI agent test rules |
+| `rules/security.md` | Forbidden actions, secret management, input validation |
+
+AI agents must read all files in `rules/` before making changes to this repository.
+
+### workflows/
+
+Standardized step-by-step processes for common development tasks:
+
+| File | Purpose |
+|---|---|
+| `workflows/feature-development.md` | End-to-end flow from issue creation to PR merge |
+| `workflows/bug-fix.md` | Root cause analysis, regression test first, then fix |
+| `workflows/release-process.md` | Semantic versioning, changelog, tagging, publish |
+| `workflows/refactoring.md` | Behavior-preserving changes with test coverage first |
+
+AI agents must follow the appropriate workflow file for each task type.
+
+### prompts/
+
+Custom prompt templates for AI tools (e.g., code generation, review, analysis). Add project-specific prompts here as the project evolves.
+
+### examples/
+
+Golden path examples that demonstrate the expected style and structure for this project. AI agents typically replicate patterns from these examples — keep them high quality.
+
+## AI Agent Rules
 
 AI agents must:
 
-- Follow repository conventions
-- Preserve architecture boundaries
-- Add tests for new functionality
-- Avoid introducing circular dependencies
+- Read `AGENTS.md` before starting any task
+- Follow all rules in `.ai/rules/`
+- Use the appropriate workflow in `.ai/workflows/`
+- Preserve architecture boundaries defined in `ARCHITECTURE.md`
+- Add tests for all new functionality
 
 AI agents must NOT:
 
-- Commit secrets
-- Modify production deployment automatically
+- Commit secrets or credentials
+- Modify production infrastructure automatically
 - Bypass CI requirements
+- Mix feature changes with refactoring in the same PR
+- Delete existing tests
 
 ---
 
