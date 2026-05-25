@@ -54,3 +54,18 @@ report.exclude_lines = [
 ]
 html.directory = "htmlcov"
 xml.output = "coverage.xml"
+
+[tool.pytest.ini_options]
+# Test discovery root
+testpaths = ["tests"]
+# Enforce strict markers — all markers must be declared below
+addopts = "--strict-markers -ra"
+# Declared test markers
+markers = [
+    "unit: isolated unit tests with no I/O",
+    "integration: tests with real DB/cache/queue",
+    "e2e: full system flow tests",
+    "slow: tests that take more than 1 second",
+]
+# Minimum pytest version required
+minversion = "7.0"
