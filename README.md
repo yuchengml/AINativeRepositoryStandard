@@ -11,13 +11,43 @@ This repository provides two main components to help you bootstrap and standardi
 - **Appendix**: Includes a highly detailed, golden-standard repository directory tree based on Domain-Driven Design (DDD) and Clean Architecture.
 
 ### 2. Ready-to-Use Templates
-Located in the `templates/` directory, these are standardized Markdown files that you can directly copy into your new projects to establish immediate alignment with the AI-Native Standard.
+Located in the `templates/` directory, these files can be copied directly into your new projects to establish immediate alignment with the AI-Native Standard.
+
+#### Root-Level Documents
 
 - **`templates/README.md`**: The primary entry point for your project, pre-structured to include architecture flow, tech stack, and observability endpoints.
-- **`templates/AGENTS.md`**: Explicit constraints and rules for AI Agents (e.g., coding rules, forbidden actions like committing secrets, and development workflows).
+- **`templates/AGENTS.md`**: Explicit constraints and rules for AI Agents (e.g., coding rules, forbidden actions like committing secrets, and development workflows). This is the primary entry point for all AI agents.
+- **`templates/CLAUDE.md`**: Auto-read by Claude Code at the start of every session. Directs Claude to read `AGENTS.md` before taking any action, ensuring consistent agent behavior.
 - **`templates/ARCHITECTURE.md`**: A template to define system boundaries, layer responsibilities (API, Application, Domain, Infrastructure), and data flow using Mermaid diagrams.
 - **`templates/CONTRIBUTING.md`**: Standardized branch naming, conventional commits, and PR label requirements (e.g., `enhancement`, `bug`). Configured to recommend `poetry` as the default package manager.
 - **`templates/DECISIONS.md`**: A template for Architecture Decision Records (ADRs) to track why certain architectural or tooling choices were made.
+- **`templates/LICENSE`**: MIT License file, ready to use.
+
+#### Configuration
+
+- **`templates/pyproject.toml`**: Pre-configured tool settings for:
+  - **ruff**: Linting and formatting rules (line length 120, Google-style docstrings, strict type annotation enforcement)
+  - **coverage**: Branch coverage with a 60% minimum threshold, HTML and XML report outputs
+  - **pytest**: Test discovery, strict markers (`unit`, `integration`, `e2e`, `slow`), and minimum version enforcement
+
+#### `.ai/` Directory
+
+The `.ai/` directory provides machine-readable rules and workflows for AI agents. It is structured for direct consumption by tools like Claude Code.
+
+**Rules** (`templates/.ai/rules/`): Coding constraints that AI agents must follow at all times.
+
+- **`python.md`**: Python-specific rules covering type safety, ruff/mypy formatting, naming conventions, async constraints, layer boundaries, and import structure.
+- **`security.md`**: Security rules including forbidden actions (hardcoded secrets, `eval()` with user input, SQL string concatenation), secret management practices, input validation, and dependency auditing.
+- **`testing.md`**: Testing rules covering test structure (`unit/`, `integration/`, `e2e/`, `fixtures/`), coverage requirements per test type, naming conventions, and fixture management.
+
+**Workflows** (`templates/.ai/workflows/`): Step-by-step procedures for common development tasks, with explicit AI agent constraints at each step.
+
+- **`feature-development.md`**: End-to-end workflow from issue creation through branch, implementation, tests, and PR.
+- **`bug-fix.md`**: Root cause analysis and regression-test-first approach before applying any fix.
+- **`refactoring.md`**: Behavior-preserving refactoring in small, independently committed steps.
+- **`release-process.md`**: Semantic versioning, changelog update, tag creation, and deployment verification.
+
+**Placeholders** (`templates/.ai/examples/`, `templates/.ai/prompts/`): Empty directories reserved for project-specific prompt templates and usage examples.
 
 ---
 
