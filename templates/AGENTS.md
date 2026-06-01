@@ -13,32 +13,32 @@ Before starting any task, read the following documents in order:
 
 | Document | Purpose |
 |---|---|
-| `ARCHITECTURE.md` | Layer boundaries, dependency flow, forbidden cross-layer access |
-| `DECISIONS.md` | Why certain architectural and tooling choices were made |
+| [ARCHITECTURE.md](./ARCHITECTURE.md) | Layer boundaries, dependency flow, forbidden cross-layer access |
+| [DECISIONS.md](./DECISIONS.md) | Why certain architectural and tooling choices were made |
 
 ### Step 2 — Learn the rules
 
 | Document | Purpose |
 |---|---|
-| `.ai/rules/python.md` | Type hints, async rules, naming conventions, layer constraints |
-| `.ai/rules/testing.md` | Test structure, required coverage, naming, agent-specific test rules |
-| `.ai/rules/security.md` | Forbidden actions, secret management, input validation |
+| [.ai/rules/python.md](./.ai/rules/python.md) | Type hints, async rules, naming conventions, layer constraints |
+| [.ai/rules/testing.md](./.ai/rules/testing.md) | Test structure, required coverage, naming, agent-specific test rules |
+| [.ai/rules/security.md](./.ai/rules/security.md) | Forbidden actions, secret management, input validation |
 
 ### Step 3 — Choose the right workflow for your task
 
 | Task Type | Workflow Document |
 |---|---|
-| New feature | `.ai/workflows/feature-development.md` |
-| Bug fix | `.ai/workflows/bug-fix.md` |
-| Release | `.ai/workflows/release-process.md` |
-| Refactoring | `.ai/workflows/refactoring.md` |
+| New feature | [.ai/workflows/feature-development.md](./.ai/workflows/feature-development.md) |
+| Bug fix | [.ai/workflows/bug-fix.md](./.ai/workflows/bug-fix.md) |
+| Release | [.ai/workflows/release-process.md](./.ai/workflows/release-process.md) |
+| Refactoring | [.ai/workflows/refactoring.md](./.ai/workflows/refactoring.md) |
 
 ### Additional references
 
 | Document | When to read |
 |---|---|
-| `CONTRIBUTING.md` | Branch naming, commit conventions, PR requirements |
-| `README.md` | Project overview, tech stack, development setup |
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | Branch naming, commit conventions, PR requirements |
+| [README.md](./README.md) | Project overview, tech stack, development setup |
 
 ---
 
@@ -53,7 +53,7 @@ Before starting any task, read the following documents in order:
 
 ## 2. Coding Rules
 
-Full details: `.ai/rules/python.md`
+Full details: [.ai/rules/python.md](./.ai/rules/python.md)
 
 - All functions must have type hints (`mypy` compliant).
 - Code format must follow the project's `ruff` configuration defined in `pyproject.toml` — do not override inline.
@@ -66,7 +66,7 @@ Full details: `.ai/rules/python.md`
 
 ## 3. Testing Rules
 
-Full details: `.ai/rules/testing.md`
+Full details: [.ai/rules/testing.md](./.ai/rules/testing.md)
 
 - All new features require unit tests.
 - Integration tests are required for API or database schema changes.
@@ -78,7 +78,7 @@ Full details: `.ai/rules/testing.md`
 
 ## 4. Architecture Constraints
 
-Full details: `ARCHITECTURE.md`
+Full details: [ARCHITECTURE.md](./ARCHITECTURE.md)
 
 - Respect layer boundaries: API → Application → Domain → Infrastructure.
 - No cross-layer access (e.g., API layer must not access the database directly).
@@ -89,7 +89,7 @@ Full details: `ARCHITECTURE.md`
 
 ## 5. Security & Forbidden Actions
 
-Full details: `.ai/rules/security.md`
+Full details: [.ai/rules/security.md](./.ai/rules/security.md)
 
 - **NEVER** commit secrets, API keys, or credentials to the repository.
 - Do not disable security scanning tools.
@@ -99,11 +99,11 @@ Full details: `.ai/rules/security.md`
 
 ## 6. Development Workflow
 
-Full details in `.ai/workflows/`
+Full details in [.ai/workflows/](./.ai/workflows/)
 
 1. Identify the task type (feature / bug fix / refactor / release).
 2. Read the corresponding workflow file in `.ai/workflows/`.
-3. Read `ARCHITECTURE.md` and `DECISIONS.md` for context.
-4. Implement and write tests following `.ai/rules/`.
+3. Read [ARCHITECTURE.md](./ARCHITECTURE.md) and [DECISIONS.md](./DECISIONS.md) for context.
+4. Implement and write tests following [.ai/rules/](./.ai/rules/).
 5. Run `make lint` and `make test` — all checks must pass.
-6. Follow commit and PR conventions in `CONTRIBUTING.md`.
+6. Follow commit and PR conventions in [CONTRIBUTING.md](./CONTRIBUTING.md).

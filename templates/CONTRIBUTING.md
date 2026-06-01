@@ -60,6 +60,8 @@ Please use at least one of the following basic labels:
 - All CI tests must pass.
 - Code coverage should not decrease.
 - New features must include tests.
+- Do **NOT** mention AI tool names (e.g. "Claude", "ChatGPT") in PR titles, descriptions, or commit messages.
+- Do **NOT** include AI-generated session URLs or any tool-related links in PR descriptions or commit messages.
 
 ---
 
