@@ -60,8 +60,11 @@ Please use at least one of the following basic labels:
 - All CI tests must pass.
 - Code coverage should not decrease.
 - New features must include tests.
-- Do **NOT** mention AI tool names (e.g. "Claude", "ChatGPT") in PR titles, descriptions, or commit messages.
-- Do **NOT** include AI-generated session URLs or any tool-related links in PR descriptions or commit messages.
+- If a commit was co-authored by an AI assistant, use the standard Git trailer format:
+  ```
+  Co-Authored-By: AI Assistant <noreply@example.com>
+  ```
+- Do **NOT** include AI tool names (e.g. "Claude", "ChatGPT"), session URLs, or any tool-specific links in commit messages, PR titles, or PR descriptions.
 
 ---
 

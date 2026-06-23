@@ -804,6 +804,21 @@ feat: add user authentication middleware
 fix: resolve async session leak
 ```
 
+## 14.3 AI Authorship in Commits
+
+若 commit 由 AI 協助產生，應使用標準 Git trailer 格式標記：
+
+```text
+feat: add retry logic for external API calls
+
+Co-Authored-By: AI Assistant <noreply@example.com>
+```
+
+禁止在 commit message、PR 標題或 PR 描述中出現：
+
+* AI 工具名稱（如 Claude、ChatGPT）
+* Session URL 或任何工具內部連結
+
 ---
 
 # 17. Development Workflow
