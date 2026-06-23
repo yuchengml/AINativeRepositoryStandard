@@ -97,7 +97,23 @@ Full details: [.ai/rules/security.md](./.ai/rules/security.md)
 
 ---
 
-## 6. Development Workflow
+## 6. SDK Knowledge
+
+If you encounter an import you do not recognize, look up in this order:
+
+1. `sdk/notes/<sdk-name>.md` — if exists, read this first
+2. `sdk/<sdk-name>/src/` — vendored source for deep tracing
+3. `sdk/REGISTRY.md` — index of all vendored SDKs and their status
+
+**Never guess SDK APIs.** Always trace the source before writing any call.
+
+This applies to:
+- SDKs released after your training cutoff
+- Internal packages under active development in this repository
+
+---
+
+## 7. Development Workflow
 
 Full details in [.ai/workflows/](./.ai/workflows/)
 
