@@ -105,6 +105,7 @@ repo/
 ├── configs/
 ├── schemas/
 ├── deployments/
+├── sdk/
 ├── .ai/
 ├── repo-meta/
 ├── .github/
@@ -486,7 +487,90 @@ tests/
 
 ---
 
-# 9. CI/CD Standards
+# 9. SDK Directory Standard
+
+## 9.1 Purpose
+
+`sdk/` 存放 LLM 訓練資料中不存在、或專案內部正在開發的 SDK / package 原始碼。
+
+當 Agent 遇到不認識的 import 時，應先查閱 `sdk/` 目錄，而非依賴訓練資料猜測 API。
+
+---
+
+## 9.2 Structure
+
+```text
+sdk/
+├── REGISTRY.md              ← 必要：所有 vendored SDK 的索引與 status 標記
+├── <sdk-name>/              ← 必要：vendored 原始碼（原封不動）
+│   └── src/
+└── notes/                   ← 選用：人工整理的 API 說明與使用範例
+    └── <sdk-name>.md
+```
+
+`notes/` 為選用目錄。若存在，Agent 應優先閱讀，再進入原始碼 trace。
+
+---
+
+## 9.3 REGISTRY.md
+
+`sdk/REGISTRY.md` 是 Agent 的索引入口，應列出所有 vendored SDK 的基本資訊：
+
+```md
+# SDK Registry
+
+| Name                  | Status   | Source Path               | Purpose                  |
+|-----------------------|----------|---------------------------|--------------------------|
+| some-internal-sdk     | internal | sdk/some-internal-sdk/    | 專案內部開發中的資料處理 SDK |
+| some-new-external-sdk | vendored | sdk/some-new-external-sdk/| LLM 未知的第三方 SDK       |
+```
+
+Status 欄位說明：
+
+* `internal` — 專案內部開發，尚未發布為公開 package
+* `vendored` — 公開發布但 LLM 訓練資料不包含
+
+---
+
+## 9.4 Agent Lookup Rule
+
+`AGENTS.md` 必須包含明確的 SDK lookup 指引：
+
+```md
+## SDK Knowledge
+
+If you don't recognize an import, look up in this order:
+1. `sdk/notes/<sdk-name>.md` — if exists, read this first
+2. `sdk/<sdk-name>/src/` — vendored source for deep tracing
+3. `sdk/REGISTRY.md` — index of all vendored SDKs
+
+Never guess SDK APIs. Always trace the source before writing any call.
+```
+
+---
+
+## 9.5 Dependency Metadata
+
+`repo-meta/dependencies.yaml` 應標記每個 dependency 的 status，讓 Agent 一目了然哪些需要查 `sdk/`：
+
+```yaml
+dependencies:
+  - name: fastapi
+    status: well-known      # LLM 熟悉，可直接使用
+
+  - name: some-internal-sdk
+    status: internal
+    source: sdk/some-internal-sdk
+
+  - name: some-new-external-sdk
+    status: vendored
+    source: sdk/some-new-external-sdk
+    version: "0.3.1"
+```
+
+---
+
+# 11. CI/CD Standards
 
 ## 9.1 Required Pipelines
 
@@ -516,7 +600,7 @@ Pull Request 必須：
 
 ---
 
-# 10. AI-Specific Standards
+# 12. AI-Specific Standards
 
 ## 10.1 Agent Entry Point Design
 
@@ -592,7 +676,7 @@ AI Agent 通常會模仿 examples 的風格。
 
 ---
 
-# 11. Machine-Readable Schemas
+# 13. Machine-Readable Schemas
 
 ## 11.1 API Schema
 
@@ -630,7 +714,7 @@ repo-meta/
 
 ---
 
-# 12. Security Standards
+# 14. Security Standards
 
 ## 12.1 Forbidden Actions
 
@@ -659,7 +743,7 @@ API_KEY = "hardcoded-secret"
 
 ---
 
-# 13. Documentation Standards
+# 15. Documentation Standards
 
 ## 13.1 docs Structure
 
@@ -689,7 +773,7 @@ AI RAG 系統非常適合使用這些知識。
 
 ---
 
-# 14. Git Standards
+# 16. Git Standards
 
 ## 14.1 Branch Naming
 
@@ -722,7 +806,7 @@ fix: resolve async session leak
 
 ---
 
-# 15. Development Workflow
+# 17. Development Workflow
 
 ## 15.1 Feature Development
 
@@ -749,7 +833,7 @@ PR 必須包含：
 
 ---
 
-# 16. Repository Templates
+# 18. Repository Templates
 
 建議建立 organization-level template repository。
 
@@ -763,7 +847,7 @@ engineering-standards/
 
 ---
 
-# 17. Recommended Tooling
+# 19. Recommended Tooling
 
 ## Python
 
@@ -778,7 +862,7 @@ engineering-standards/
 
 ---
 
-# 18. AI-Agent Optimization Checklist
+# 20. AI-Agent Optimization Checklist
 
 ## Required
 
@@ -805,7 +889,7 @@ engineering-standards/
 
 ---
 
-# 19. Example Minimal AI-Native Repository
+# 21. Example Minimal AI-Native Repository
 
 ```text
 repo/
@@ -825,7 +909,7 @@ repo/
 
 ---
 
-# 20. Final Goal
+# 22. Final Goal
 
 AI-Native Repository 的核心目標：
 
@@ -842,7 +926,7 @@ AI-Native Repository 的核心目標：
 
 ---
 
-# 21. Future Extensions
+# 23. Future Extensions
 
 未來可擴展：
 
@@ -856,7 +940,7 @@ AI-Native Repository 的核心目標：
 
 ---
 
-# 22. Suggested Adoption Roadmap
+# 24. Suggested Adoption Roadmap
 
 ## Phase 1
 
@@ -904,7 +988,7 @@ AI-Native Repository 的核心目標：
 
 ---
 
-# 23. License
+# 25. License
 
 建議所有 Repository 明確定義 License：
 
@@ -917,7 +1001,7 @@ AI-Native Repository 的核心目標：
 
 ---
 
-# 24. Summary
+# 26. Summary
 
 AI 時代的 Repository 已不只是程式碼儲存空間。
 
@@ -943,7 +1027,7 @@ Repository 結構與規範品質，將直接影響：
 
 ---
 
-# 25. Appendix: Detailed Repository Structure Example
+# 27. Appendix: Detailed Repository Structure Example
 
 這是一個高度符合 Domain-Driven Design (DDD) 與 Clean Architecture 的完整 AI-Native Repository 目錄結構範例：
 
@@ -1035,5 +1119,13 @@ repo/
 │   ├── docker/
 │   ├── kubernetes/
 │   ├── helm/
+│
+├── sdk/
+│   ├── REGISTRY.md
+│   ├── <sdk-name>/
+│   │   └── src/
+│   └── notes/               ← optional
+│       └── <sdk-name>.md
+│
 └── LICENSE
 ```
