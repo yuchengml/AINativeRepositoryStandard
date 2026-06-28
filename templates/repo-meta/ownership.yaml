@@ -1,0 +1,18 @@
+teams:
+  - name: platform-team
+    responsibility: infrastructure
+    paths:
+      - deployments/
+      - .github/
+
+  - name: backend-team
+    responsibility: application services
+    paths:
+      - src/
+      - tests/
+
+  - name: ai-team
+    responsibility: LLM orchestration
+    paths:
+      - sdk/
+      - .ai/
