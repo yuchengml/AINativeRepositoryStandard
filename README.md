@@ -49,6 +49,17 @@ The `.ai/` directory provides machine-readable rules and workflows for AI agents
 
 **Placeholders** (`templates/.ai/examples/`, `templates/.ai/prompts/`): Empty directories reserved for project-specific prompt templates and usage examples.
 
+#### `sdk/` Directory
+
+- **`templates/sdk/REGISTRY.md`**: Index of all vendored and internal SDKs in the repository. AI agents must consult this file before writing any call to an unrecognized import. Lists each SDK's name, status (`internal` or `vendored`), source path, and purpose.
+
+#### `repo-meta/` Directory
+
+Machine-readable metadata consumed by AI agents and tooling.
+
+- **`templates/repo-meta/ownership.yaml`**: Maps teams to the repository paths they own, enabling AI agents to identify the right reviewers and understand code ownership boundaries.
+- **`templates/repo-meta/dependencies.yaml`**: Annotates each project dependency with a `status` field (`well-known`, `internal`, or `vendored`) so AI agents know which ones require `sdk/` lookup before use.
+
 ---
 
 ## 🚀 How to Use

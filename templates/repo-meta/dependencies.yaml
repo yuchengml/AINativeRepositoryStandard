@@ -1,0 +1,15 @@
+dependencies:
+  - name: fastapi
+    status: well-known      # familiar to LLMs; use directly
+
+  - name: pydantic
+    status: well-known
+
+  # - name: some-internal-sdk
+  #   status: internal
+  #   source: sdk/some-internal-sdk
+
+  # - name: some-new-external-sdk
+  #   status: vendored
+  #   source: sdk/some-new-external-sdk
+  #   version: "0.1.0"
