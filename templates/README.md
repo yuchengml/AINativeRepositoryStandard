@@ -45,6 +45,7 @@ repo/
 ├── configs/
 ├── schemas/
 ├── deployments/
+├── sdk/
 ├── .ai/
 ├── repo-meta/
 ├── .github/
