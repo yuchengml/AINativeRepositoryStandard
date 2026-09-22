@@ -78,7 +78,7 @@ Machine-readable metadata consumed by AI agents and tooling.
 
 Tracking known inconsistencies and missing pieces between the Standard document and the templates:
 
-- [ ] Fix the Standard document's broken section numbering
+- [x] Fix the Standard document's broken section numbering
 - [ ] Add missing dev/CI tooling templates (`.github/workflows/`, PR template, `Makefile`, `tox.ini`, `.gitignore`)
 - [ ] Scaffold placeholders for structural directories referenced but not provided (`docs/`, `schemas/`, `examples/`, `scripts/`, `configs/`, `deployments/`)
 - [ ] Complete `repo-meta/` and `sdk/` templates (missing files, and a broken example path)
