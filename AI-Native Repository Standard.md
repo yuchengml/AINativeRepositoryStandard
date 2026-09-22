@@ -193,7 +193,7 @@ ARCHITECTURE.md + DECISIONS.md   ← 理解系統架構
 
 ---
 
-## 4.6 CLAUDE.md
+## 4.3 CLAUDE.md
 
 專為 Claude Code 設計的入口文件。
 
@@ -221,7 +221,7 @@ Read `AGENTS.md` before taking any action in this repository.
 
 ---
 
-## 4.3 ARCHITECTURE.md
+## 4.4 ARCHITECTURE.md
 
 定義：
 
@@ -254,7 +254,7 @@ Infrastructure Layer
 
 ---
 
-## 4.4 CONTRIBUTING.md
+## 4.5 CONTRIBUTING.md
 
 定義：
 
@@ -266,7 +266,7 @@ Infrastructure Layer
 
 ---
 
-## 4.5 DECISIONS.md
+## 4.6 DECISIONS.md
 
 紀錄架構決策。
 
@@ -570,9 +570,9 @@ dependencies:
 
 ---
 
-# 11. CI/CD Standards
+# 10. CI/CD Standards
 
-## 9.1 Required Pipelines
+## 10.1 Required Pipelines
 
 ```text
 .github/workflows/
@@ -589,7 +589,7 @@ dependencies:
 
 ---
 
-## 9.2 CI Requirements
+## 10.2 CI Requirements
 
 Pull Request 必須：
 
@@ -600,9 +600,9 @@ Pull Request 必須：
 
 ---
 
-# 12. AI-Specific Standards
+# 11. AI-Specific Standards
 
-## 10.1 Agent Entry Point Design
+## 11.1 Agent Entry Point Design
 
 AI Agent 進入 Repository 的閱讀路徑應明確定義：
 
@@ -622,7 +622,7 @@ ARCHITECTURE.md + DECISIONS.md   ← 系統架構與決策背景
 
 ---
 
-## 10.2 .ai Directory
+## 11.2 .ai Directory
 
 ```text
 .ai/
@@ -634,7 +634,7 @@ ARCHITECTURE.md + DECISIONS.md   ← 系統架構與決策背景
 
 ---
 
-## 10.3 AI Rules
+## 11.3 AI Rules
 
 `.ai/rules/` 存放語言與領域的詳細規範，供 Agent 在實作前閱讀：
 
@@ -646,7 +646,7 @@ ARCHITECTURE.md + DECISIONS.md   ← 系統架構與決策背景
 
 ---
 
-## 10.4 Workflow Templates
+## 11.4 Workflow Templates
 
 `.ai/workflows/` 存放各任務類型的逐步流程，Agent 應依任務類型選擇對應文件：
 
@@ -660,7 +660,7 @@ ARCHITECTURE.md + DECISIONS.md   ← 系統架構與決策背景
 
 ---
 
-## 10.4 Golden Path Examples
+## 11.5 Golden Path Examples
 
 提供 AI 最容易成功的範例。
 
@@ -676,9 +676,9 @@ AI Agent 通常會模仿 examples 的風格。
 
 ---
 
-# 13. Machine-Readable Schemas
+# 12. Machine-Readable Schemas
 
-## 11.1 API Schema
+## 12.1 API Schema
 
 ```text
 schemas/openapi.yaml
@@ -686,7 +686,7 @@ schemas/openapi.yaml
 
 ---
 
-## 11.2 Event Schema
+## 12.2 Event Schema
 
 ```text
 schemas/events/
@@ -694,7 +694,7 @@ schemas/events/
 
 ---
 
-## 11.3 Config Schema
+## 12.3 Config Schema
 
 ```text
 schemas/config/
@@ -702,7 +702,7 @@ schemas/config/
 
 ---
 
-## 11.4 Metadata
+## 12.4 Metadata
 
 ```text
 repo-meta/
@@ -714,9 +714,9 @@ repo-meta/
 
 ---
 
-# 14. Security Standards
+# 13. Security Standards
 
-## 12.1 Forbidden Actions
+## 13.1 Forbidden Actions
 
 禁止：
 
@@ -727,7 +727,7 @@ repo-meta/
 
 ---
 
-## 12.2 Secret Management
+## 13.2 Secret Management
 
 應使用：
 
@@ -743,9 +743,9 @@ API_KEY = "hardcoded-secret"
 
 ---
 
-# 15. Documentation Standards
+# 14. Documentation Standards
 
-## 13.1 docs Structure
+## 14.1 docs Structure
 
 ```text
 docs/
@@ -759,7 +759,7 @@ docs/
 
 ---
 
-## 13.2 Domain Knowledge
+## 14.2 Domain Knowledge
 
 ```text
 docs/domain/
@@ -773,9 +773,9 @@ AI RAG 系統非常適合使用這些知識。
 
 ---
 
-# 16. Git Standards
+# 15. Git Standards
 
-## 14.1 Branch Naming
+## 15.1 Branch Naming
 
 ```text
 feature/
@@ -786,7 +786,7 @@ hotfix/
 
 ---
 
-## 14.2 Commit Convention
+## 15.2 Commit Convention
 
 ```text
 feat:
@@ -804,7 +804,7 @@ feat: add user authentication middleware
 fix: resolve async session leak
 ```
 
-## 14.3 AI Authorship in Commits
+## 15.3 AI Authorship in Commits
 
 若 commit 由 AI 協助產生，應使用標準 Git trailer 格式標記：
 
@@ -821,9 +821,9 @@ Co-Authored-By: AI Assistant <noreply@example.com>
 
 ---
 
-# 17. Development Workflow
+# 16. Development Workflow
 
-## 15.1 Feature Development
+## 16.1 Feature Development
 
 1. Create issue
 2. Define acceptance criteria
@@ -836,7 +836,7 @@ Co-Authored-By: AI Assistant <noreply@example.com>
 
 ---
 
-## 15.2 Pull Request Requirements
+## 16.2 Pull Request Requirements
 
 PR 必須包含：
 
@@ -848,7 +848,7 @@ PR 必須包含：
 
 ---
 
-# 18. Repository Templates
+# 17. Repository Templates
 
 建議建立 organization-level template repository。
 
@@ -862,7 +862,7 @@ engineering-standards/
 
 ---
 
-# 19. Recommended Tooling
+# 18. Recommended Tooling
 
 ## Python
 
@@ -877,7 +877,7 @@ engineering-standards/
 
 ---
 
-# 20. AI-Agent Optimization Checklist
+# 19. AI-Agent Optimization Checklist
 
 ## Required
 
@@ -904,7 +904,7 @@ engineering-standards/
 
 ---
 
-# 21. Example Minimal AI-Native Repository
+# 20. Example Minimal AI-Native Repository
 
 ```text
 repo/
@@ -924,7 +924,7 @@ repo/
 
 ---
 
-# 22. Final Goal
+# 21. Final Goal
 
 AI-Native Repository 的核心目標：
 
@@ -941,7 +941,7 @@ AI-Native Repository 的核心目標：
 
 ---
 
-# 23. Future Extensions
+# 22. Future Extensions
 
 未來可擴展：
 
@@ -955,7 +955,7 @@ AI-Native Repository 的核心目標：
 
 ---
 
-# 24. Suggested Adoption Roadmap
+# 23. Suggested Adoption Roadmap
 
 ## Phase 1
 
@@ -1003,7 +1003,7 @@ AI-Native Repository 的核心目標：
 
 ---
 
-# 25. License
+# 24. License
 
 建議所有 Repository 明確定義 License：
 
@@ -1016,7 +1016,7 @@ AI-Native Repository 的核心目標：
 
 ---
 
-# 26. Summary
+# 25. Summary
 
 AI 時代的 Repository 已不只是程式碼儲存空間。
 
@@ -1042,7 +1042,7 @@ Repository 結構與規範品質，將直接影響：
 
 ---
 
-# 27. Appendix: Detailed Repository Structure Example
+# 26. Appendix: Detailed Repository Structure Example
 
 這是一個高度符合 Domain-Driven Design (DDD) 與 Clean Architecture 的完整 AI-Native Repository 目錄結構範例：
 
