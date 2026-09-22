@@ -109,6 +109,7 @@ repo/
 ├── .ai/
 ├── repo-meta/
 ├── .github/
+├── .gitignore
 ├── pyproject.toml
 ├── tox.ini
 ├── Makefile
@@ -845,6 +846,8 @@ PR 必須包含：
 * Test evidence
 * Breaking changes
 * Related issue
+
+這些欄位應以 `.github/pull_request_template.md` 落實為 PR 模板，而非僅依賴貢獻者記憶。
 
 ---
 
