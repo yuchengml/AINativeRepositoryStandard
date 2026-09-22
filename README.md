@@ -78,19 +78,11 @@ Machine-readable metadata consumed by AI agents and tooling.
 
 Tracking known inconsistencies and missing pieces between the Standard document and the templates:
 
-- [ ] Fix broken section numbering in `AI-Native Repository Standard.md` (jumps from `# 9.` to `# 11.`, and all `##` subsection numbers are off by 2 from `# 11.` onward; `## 10.4` is used twice)
-- [ ] Add a `.github/workflows/` CI pipeline template (lint, type-check, unit-test, integration-test, build, security-scan) — currently referenced by `AGENTS.md`, `templates/README.md`, and Standard §11.1 but not provided
-- [ ] Add a `.github/pull_request_template.md` covering Summary / Motivation / Test evidence / Breaking changes / Related issue, per Standard §17.2
-- [ ] Add a `Makefile` template (`make dev`, `make test`, `make lint`, `make typecheck` — referenced by `templates/README.md` and `AGENTS.md` but not provided)
-- [ ] Add a `tox.ini` template (listed in the recommended structure but not provided)
-- [ ] Add a `.gitignore` template (listed in `templates/README.md`'s repo tree; also required by `.ai/rules/security.md` for `.env` files)
-- [ ] Scaffold placeholders (e.g. `.gitkeep` or short `README.md`) for `docs/`, `schemas/`, `examples/`, `scripts/`, `configs/`, `deployments/`
-- [ ] Add `repo-meta/module-boundaries.yaml` and `repo-meta/service-catalog.yaml` templates (defined in Standard §13.4 but missing; only `ownership.yaml` and `dependencies.yaml` exist)
-- [ ] Fix `templates/sdk/REGISTRY.md`'s example row, which points to `sdk/example-sdk/` — a path that doesn't actually exist in the templates
-- [ ] Add a **Quick Start** section to `templates/README.md` (required by Standard §4.1 but missing)
-- [ ] Fix `templates/README.md`'s License section — it shows an `Apache-2.0` example while the actual `templates/LICENSE` is MIT
-- [ ] Align `templates/README.md`'s "Philosophy" section wording with the Standard's actual four core principles (currently omits Explicit Over Implicit and introduces undefined terms)
-- [ ] Expand `templates/CONTRIBUTING.md`'s PR Requirements to include Breaking changes / Related issue, per Standard §17.2
+- [ ] Fix the Standard document's broken section numbering
+- [ ] Add missing dev/CI tooling templates (`.github/workflows/`, PR template, `Makefile`, `tox.ini`, `.gitignore`)
+- [ ] Scaffold placeholders for structural directories referenced but not provided (`docs/`, `schemas/`, `examples/`, `scripts/`, `configs/`, `deployments/`)
+- [ ] Complete `repo-meta/` and `sdk/` templates (missing files, and a broken example path)
+- [ ] Clean up inconsistencies within `templates/README.md` and `templates/CONTRIBUTING.md` (missing Quick Start, wrong License example, mismatched principle wording, incomplete PR requirements)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
