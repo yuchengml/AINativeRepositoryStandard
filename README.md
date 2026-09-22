@@ -22,13 +22,21 @@ Located in the `templates/` directory, these files can be copied directly into y
 - **`templates/CONTRIBUTING.md`**: Standardized branch naming, conventional commits, and PR label requirements (e.g., `enhancement`, `bug`). Configured to recommend `poetry` as the default package manager.
 - **`templates/DECISIONS.md`**: A template for Architecture Decision Records (ADRs) to track why certain architectural or tooling choices were made.
 - **`templates/LICENSE`**: MIT License file, ready to use.
+- **`templates/.gitignore`**: Standard Python ignores (caches, virtual environments, coverage reports, `.env` files, IDE/OS files).
 
-#### Configuration
+#### Configuration & Tooling
 
 - **`templates/pyproject.toml`**: Pre-configured tool settings for:
   - **ruff**: Linting and formatting rules (line length 120, Google-style docstrings, strict type annotation enforcement)
   - **coverage**: Branch coverage with a 60% minimum threshold, HTML and XML report outputs
   - **pytest**: Test discovery, strict markers (`unit`, `integration`, `e2e`, `slow`), and minimum version enforcement
+- **`templates/tox.ini`**: Runs the test suite across Python 3.10–3.12, plus dedicated `lint` and `typecheck` environments.
+- **`templates/Makefile`**: Common developer commands (`make dev`, `make test`, `make lint`, `make format`, `make typecheck`, `make coverage`, `make clean`) matching the commands referenced throughout `templates/README.md` and `templates/AGENTS.md`.
+
+#### `.github/` Directory
+
+- **`templates/.github/workflows/ci.yml`**: GitHub Actions pipeline covering the six required checks from the Standard (lint, type-check, unit-test, integration-test, security-scan, build).
+- **`templates/.github/pull_request_template.md`**: PR template covering Summary, Motivation, Related Issue, Test Evidence, and Breaking Changes, per the Standard's Pull Request Requirements.
 
 #### `.ai/` Directory
 
@@ -79,7 +87,7 @@ Machine-readable metadata consumed by AI agents and tooling.
 Tracking known inconsistencies and missing pieces between the Standard document and the templates:
 
 - [x] Fix the Standard document's broken section numbering
-- [ ] Add missing dev/CI tooling templates (`.github/workflows/`, PR template, `Makefile`, `tox.ini`, `.gitignore`)
+- [x] Add missing dev/CI tooling templates (`.github/workflows/`, PR template, `Makefile`, `tox.ini`, `.gitignore`)
 - [ ] Scaffold placeholders for structural directories referenced but not provided (`docs/`, `schemas/`, `examples/`, `scripts/`, `configs/`, `deployments/`)
 - [ ] Complete `repo-meta/` and `sdk/` templates (missing files, and a broken example path)
 - [ ] Clean up inconsistencies within `templates/README.md` and `templates/CONTRIBUTING.md` (missing Quick Start, wrong License example, mismatched principle wording, incomplete PR requirements)
