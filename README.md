@@ -64,7 +64,7 @@ Machine-readable metadata consumed by AI agents and tooling.
 
 ## 🚀 How to Use
 
-1. **Read the Standard**: Start by reading the `AI-Native Repository Standard.md` to understand the core philosophy (Human + AI Collaboration, Explicit Over Implicit, Deterministic Engineering).
+1. **Read the Standard**: Start by reading the `AI-Native Repository Standard.md` to understand the core philosophy (Human + AI Collaboration, Explicit Over Implicit, Machine Readability, Deterministic Engineering).
 2. **Bootstrap a New Project**:
    - Create your new repository.
    - Copy all files from the `templates/` folder into the root of your new repository.
