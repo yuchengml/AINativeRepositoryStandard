@@ -104,6 +104,100 @@ Tracking known inconsistencies and missing pieces between the Standard document 
 - [ ] Scaffold placeholders for structural directories referenced but not provided (`docs/`, `schemas/`, `examples/`, `scripts/`, `configs/`, `deployments/`)
 - [ ] Complete `repo-meta/` and `sdk/` templates (missing files, and a broken example path)
 - [ ] Clean up inconsistencies within `templates/README.md` and `templates/CONTRIBUTING.md` (missing Quick Start, wrong License example, mismatched principle wording, incomplete PR requirements)
+- [ ] Inventory agent development scenarios and evaluate which to package as skills (evaluate and execute item by item)
+  - **Common reading path** for every scenario (the references below list only what is read *in addition*):
+    `CLAUDE.md` → `AGENTS.md` (§0 Knowledge Map) → `ARCHITECTURE.md` + `DECISIONS.md` → `.ai/rules/*` → `.ai/workflows/<task-type>`;
+    verified by `Makefile` (`make lint` / `make test`) → `.github/workflows/ci.yml` → `.github/pull_request_template.md`.
+  - **Where each kind of guidance belongs**:
+    - *Always-on rules* → `AGENTS.md` / `.ai/rules/*`. Needed at any moment; a skill may not trigger at that moment.
+    - *On-demand procedures* → `.ai/workflows/*` as the single source of truth, optionally with a **thin skill wrapper** (trigger description + pointer to the workflow + scripts) in the repo's `.claude/skills/`.
+    - *Enforcement* → CI / scripts / hooks. A skill is advisory; CI is enforcing.
+  - **Skill fit criteria**: a discrete, invocable task; scriptable steps; costly to get wrong; must not rely on being triggered by chance.
+    Avoid skills that re-write workflows (they drift) or hold rules other agent tools must also follow (`AGENTS.md` is tool-agnostic; skills are Claude Code only).
+  - **Tier 1 — full workflow exists; the agent can follow it end to end**
+    - [x] **Repository bootstrap**
+      - Refs: `skills/bootstrap-ai-native-repo/SKILL.md`, `PROJECT_BRIEF.md`, the Standard document
+      - Constraints / gate: files split into verbatim / parameterized / customized; unknowns become `TODO(human)`; `check_compliance.sh` passes
+      - Skill fit: ✅ High. It runs before the repository has any rules, so it must come from outside; it is scripted and reused across repositories.
+      - Form: user-level skill (done)
+    - [ ] **Release**
+      - Refs: `.ai/workflows/release-process.md`, `pyproject.toml` (version)
+      - Constraints / gate: SemVer; MAJOR bump needs human approval; never push to `main` directly; never edit past changelog entries
+      - Skill fit: ✅ High. Mechanical steps (version bump, changelog, tag), high risk, needs a human checkpoint.
+      - Form: repo-level thin skill + `bump_version` / changelog check scripts (depends on the `CHANGELOG.md` gap below)
+    - [ ] **Bug fix**
+      - Refs: `.ai/workflows/bug-fix.md`, `.ai/rules/testing.md` (AI Agent Rules)
+      - Constraints / gate: regression test written first and shown failing; fix root cause only; reproduction steps in PR; `fix:` commit
+      - Skill fit: 🟡 Medium. Mostly judgment, but "the regression test fails before the fix" can be verified by a script.
+      - Form: thin skill wrapper + regression-test verification script
+    - [ ] **Feature development**
+      - Refs: `.ai/workflows/feature-development.md`, `ARCHITECTURE.md` §2, `.ai/rules/python.md` (Layer Rules), `.ai/rules/testing.md`
+      - Constraints / gate: `feature/` branch; no business logic in routers; no infrastructure imports in domain; unit tests required, integration tests for API changes; `feat:` commit
+      - Skill fit: 🟡 Medium. `AGENTS.md` already routes to the workflow; a skill mainly adds a one-step entry such as `/feature <issue>`.
+      - Form: optional thin skill wrapper
+    - [ ] **Refactoring**
+      - Refs: `.ai/workflows/refactoring.md`, `.ai/rules/testing.md`
+      - Constraints / gate: behavior-preserving; small independent commits; no mixed features; never delete tests; deprecation plan for public API renames
+      - Skill fit: 🟠 Low. Almost entirely judgment; "run tests after each step" is already a rule.
+      - Form: keep as workflow only
+  - **Tier 2 — rules exist but no dedicated workflow; the agent must combine documents itself**
+    - [ ] **Add or upgrade a dependency**
+      - Refs: Standard §8.2–8.3, `repo-meta/dependencies.yaml`, `.ai/rules/security.md` (Dependency Security), `DECISIONS.md`
+      - Constraints / gate: state the purpose; no duplicate libraries; no automatic major upgrades; CI `security-scan` (pip-audit) passes; ADR for significant choices
+      - Skill fit: ✅ High. There is no workflow yet (largest gap), and the steps are fixed: `poetry add` → `pip-audit` → update `dependencies.yaml` → ADR.
+      - Form: new `.ai/workflows/dependency-update.md` + thin skill wrapper
+    - [ ] **Vendor a new SDK**
+      - Refs: `AGENTS.md` §6, `sdk/REGISTRY.md`, `sdk/<sdk>/src/`, `sdk/notes/<sdk>.md`, `repo-meta/dependencies.yaml`
+      - Constraints / gate: `sdk/`, `REGISTRY.md`, `dependencies.yaml` and `notes/` stay consistent
+      - Skill fit: ✅ High. Four places must change together and one is easily missed.
+      - Form: skill + consistency check script
+    - [ ] **Code review (agent as reviewer)**
+      - Refs: `CONTRIBUTING.md` §4–5, `.github/pull_request_template.md`, `repo-meta/ownership.yaml`, `AGENTS.md` §2–5
+      - Constraints / gate: PR template sections complete; no layer or security rule violations; reviewers chosen from ownership
+      - Skill fit: ✅ Medium-high. A discrete, invocable task whose checklist comes from repository documents.
+      - Form: repo-level skill that uses `AGENTS.md` and `.ai/rules/*` as review criteria
+    - [ ] **Fix a CI failure**
+      - Refs: `.github/workflows/ci.yml`, `Makefile`, `pyproject.toml`, `tox.ini`
+      - Constraints / gate: reproduce locally with the matching make target; never skip tests or lower thresholds to get green
+      - Skill fit: 🟡 Medium. The CI-job → make-target mapping can be tabulated, but it is generic across repositories.
+      - Form: organization-level skill
+    - [ ] **Architecture decision / technology choice**
+      - Refs: `ARCHITECTURE.md`, `DECISIONS.md` (ADR: Context / Decision / Consequences)
+      - Constraints / gate: the agent drafts, a human decides
+      - Skill fit: 🟠 Low. Human judgment; the ADR format already lives in `DECISIONS.md`.
+      - Form: keep as documents
+    - [ ] **Security fix**
+      - Refs: `.ai/rules/security.md`, `.ai/workflows/bug-fix.md`, `ci.yml` `security-scan`
+      - Constraints / gate: no hardcoded secrets, no `eval()` on user input, no SQL string concatenation; never disable scanners; permission changes need human review
+      - Skill fit: ❌ Not suitable. The rules must be always on; as a skill they would only apply when remembered.
+      - Form: keep as always-on rules + CI (reviews can use an existing security-review tool)
+    - [ ] **SDK lookup (unrecognized import)**
+      - Refs: `AGENTS.md` §6 → `sdk/notes/` → `sdk/<sdk>/src/` → `sdk/REGISTRY.md`
+      - Constraints / gate: never guess SDK APIs
+      - Skill fit: ❌ Not suitable. Needed at any point while writing code; a skill would not trigger at that moment.
+      - Form: keep in `AGENTS.md` (always on)
+    - [ ] **Add tests / raise coverage**
+      - Refs: `.ai/rules/testing.md`, `pyproject.toml` `[tool.coverage]` / `[tool.pytest.ini_options]`
+      - Constraints / gate: `test_<unit>_<scenario>_<expected>` naming; declared markers only; shared data in `tests/fixtures/`
+      - Skill fit: ❌ Not suitable. Applies to every code change; thresholds are already enforced by `pyproject.toml`.
+      - Form: keep as always-on rules + CI
+    - [ ] **Documentation update**
+      - Refs: `README.md`, `ARCHITECTURE.md` (Mermaid), `DECISIONS.md`
+      - Constraints / gate: kept in sync with code changes; "Documentation updated" item in the PR checklist
+      - Skill fit: ❌ Not suitable. It is a step inside other workflows, not a standalone task.
+      - Form: keep in the PR checklist
+  - **Tier 3 — referenced by the Standard but not yet supported (gaps to close before any skill)**
+    - [ ] **Hotfix**: `hotfix/` branch prefix exists (§15.1) but there is no `.ai/workflows/hotfix.md`
+    - [ ] **API / event schema changes**: §12 requires machine-readable schemas, but templates have no `schemas/`, so agents cannot detect breaking changes
+    - [ ] **Deployment**: `AGENTS.md` forbids autonomous production changes, but there is no `deployments/` and no release pipeline in `ci.yml`
+    - [ ] **Changelog**: `release-process.md` requires one, but templates have no `CHANGELOG.md`
+    - [ ] **Golden path examples**: §11.5 relies on them, but `examples/`, `.ai/examples/` and `.ai/prompts/` are empty
+    - [ ] **LLM evaluation**: only deterministic tests are defined; no eval marker, golden dataset, or CI job
+    - [ ] **Database migrations**: `testing.md` mentions schema changes, but there is no migration tool or workflow
+  - **Cross-cutting enforcement**
+    - [ ] Add a CI job that runs `check_compliance.sh` to catch drift from the Standard
+    - [ ] Evaluate Claude Code hooks (e.g. block edits to verbatim files) as enforcement instead of skill instructions
+  - **Suggested priority**: dependency update → release → vendor SDK → code review; thin wrappers for bug fix / feature later; keep rules always on.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
