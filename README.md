@@ -68,15 +68,28 @@ Machine-readable metadata consumed by AI agents and tooling.
 - **`templates/repo-meta/ownership.yaml`**: Maps teams to the repository paths they own, enabling AI agents to identify the right reviewers and understand code ownership boundaries.
 - **`templates/repo-meta/dependencies.yaml`**: Annotates each project dependency with a `status` field (`well-known`, `internal`, or `vendored`) so AI agents know which ones require `sdk/` lookup before use.
 
+### 3. Bootstrap Skill
+
+- **[`skills/bootstrap-ai-native-repo/`](./skills/bootstrap-ai-native-repo/SKILL.md)**: A Claude Code skill that initializes a new repository from its initial `README.md` (the project brief). It fetches the standard into a temporary directory outside the repository, copies mechanical templates verbatim, customizes the narrative documents from the brief (unknowns become `TODO(human)`, never guesses), scaffolds the `src/` and `tests/` skeleton, records the standard's commit SHA as an ADR, and verifies the result.
+  - `PROJECT_BRIEF.md`: Template for the initial `README.md` that the skill reads.
+  - `scripts/fetch_standard.sh`: Clones the standard outside the target repository and prints its commit SHA.
+  - `scripts/copy_templates.sh`: Copies `templates/` into the target without overwriting existing files.
+  - `scripts/check_compliance.sh`: Verifies verbatim files are unchanged, parameterized files keep their invariants, customized files have no template placeholders, and the standard version is recorded.
+
 ---
 
 ## 🚀 How to Use
 
 1. **Read the Standard**: Start by reading the `AI-Native Repository Standard.md` to understand the core philosophy (Human + AI Collaboration, Explicit Over Implicit, Machine Readability, Deterministic Engineering).
-2. **Bootstrap a New Project**:
-   - Create your new repository.
-   - Copy all files from the `templates/` folder into the root of your new repository.
-3. **Customize**: 
+2. **Bootstrap a New Project** (choose one):
+   - **With the skill (recommended)**:
+     - Install it: `cp -r skills/bootstrap-ai-native-repo ~/.claude/skills/` (or into a project's `.claude/skills/`).
+     - Create your new repository with only a `README.md` filled in from `skills/bootstrap-ai-native-repo/PROJECT_BRIEF.md`.
+     - Ask Claude Code to bootstrap the repository with the AI-Native Repository Standard, then review the `TODO(human)` items it reports.
+   - **Manually**:
+     - Create your new repository.
+     - Copy all files from the `templates/` folder into the root of your new repository.
+3. **Customize** (manual path only; the skill does this from the brief):
    - Update `README.md` with your project's specific details.
    - Adjust `ARCHITECTURE.md` to reflect your actual system boundaries.
    - Record your initial project decisions in `DECISIONS.md`.

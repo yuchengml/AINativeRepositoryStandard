@@ -7,8 +7,7 @@
 - Prefer `TypeAlias` for complex type definitions
 
 ```python
-async def get_user(user_id: str) -> User:
-    ...
+async def get_user(user_id: str) -> User: ...
 ```
 
 ## Formatting
@@ -46,6 +45,7 @@ ruff format .
 user_id = "abc"
 MAX_RETRY_COUNT = 3
 
+
 class UserService:
     def get_user(self, user_id: str) -> User: ...
 ```
@@ -60,6 +60,7 @@ class UserService:
 # Forbidden
 async def bad():
     time.sleep(1)
+
 
 # Correct
 async def good():

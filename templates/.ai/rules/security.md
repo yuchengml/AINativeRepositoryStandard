@@ -22,6 +22,7 @@ API_KEY = "sk-hardcoded-secret"
 
 # Correct
 import os
+
 API_KEY = os.environ["API_KEY"]
 ```
 

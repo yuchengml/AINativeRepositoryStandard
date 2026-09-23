@@ -56,7 +56,8 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
       - run: pipx install poetry
       - run: poetry install --no-interaction
-      - run: poetry run pytest -m integration
+      # pytest exits 5 when no test is collected (e.g. a freshly bootstrapped repo); treat that as a pass
+      - run: poetry run pytest -m integration || [ $? -eq 5 ]
 
   security-scan:
     runs-on: ubuntu-latest
